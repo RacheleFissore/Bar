@@ -3,18 +3,19 @@ package it.polito.tdp.bar.model;
 import java.time.Duration;
 
 public class Event implements Comparable<Event>{
-
+	// Tipologie di eventi possibili
 	public enum EventType {
 		ARRIVO_GRUPPO_CLIENTI,
 		TAVOLO_LIBERATO
 	}
 	
-	private Duration time;
-	private EventType type;
-	private int nPersone;
-	private Duration durata;
-	private double tolleranza;
-	private Tavolo tavolo;
+	// Duration: è un numero di secondi, è come se fosse un integer
+	private Duration time; // Istante in cui si verifica l'evento creato
+	private EventType type; // Tipo di evento del singolo evento
+	private int nPersone; // Numero persone che vogliono sedersi al tavolo
+	private Duration durata; // Quanto il gruppo di persone sta al tavolo
+	private double tolleranza; // Tolleranza dei clienti nel restare al bancone del bar se non c'è posto al tavolo (é una probabilità)
+	private Tavolo tavolo; // Tavolo da assegnare al gruppo di clienti
 	
 	public Event(Duration time, EventType type, int nPersone, Duration durata, double tolleranza, Tavolo tavolo) {
 		super();
@@ -74,7 +75,9 @@ public class Event implements Comparable<Event>{
 		this.tavolo = tavolo;
 	}
 
-	@Override
+	// Gli eventi devono essere ordinabili in base alla priorità che vogliamo noi perchè vanno a finire in una coda prioritaria.
+	// La priorità viene data dal tempo, cioè gli eventi più recenti hanno priorità maggiore
+	@Override 
 	public int compareTo(Event o) {
 		return this.time.compareTo(o.getTime());
 	}
